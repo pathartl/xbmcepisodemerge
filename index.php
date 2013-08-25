@@ -54,9 +54,6 @@ XBMC Episode Merger
 			'value="' . sprintf('%02s', $episode->EpisodeNumber) . '"</input>';
 		echo '</tr>';
 	}
-
-	echo end($xml->Episode)->EpisodeName;
-
 ?>
 </table>
 </form>
