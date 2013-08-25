@@ -1,9 +1,23 @@
 XBMC Episode Merger
 <br><br>
+
+<form action="index.php" method="post">
+	TheTVDB Series ID: <input type="text" name="SeriesID">
+	<input type="submit" value="Change">
+</form>
+
 <?php
 	
 	// Get out show's data from TheTVDB
-	$file = 'http://thetvdb.com/data/series/'.$_GET['SeriesID'].'/all/';
+	if ($_POST['SeriesID']) {
+	    $SeriesID = $_POST['SeriesID'];
+	} elseif ($_GET['SeriesID']) {
+	    $SeriesID = $_GET['SeriesID'];
+	} else {
+	    $SeriesID = "";
+	}
+
+	$file = 'http://thetvdb.com/data/series/'.$SeriesID.'/all/';
 	if (!$xml = simplexml_load_file($file))
 		exit("Failed to open " / $file);
 
