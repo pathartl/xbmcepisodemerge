@@ -3,9 +3,10 @@ XBMC Episode Merger
 
 <form action="index.php" method="post">
 	TheTVDB Series ID: <input type="text" name="SeriesID">
-	<input type="submit" value="Change">
+	<input type="submit" value="Change" name="changeseries">
 </form>
 
+<form action="index.php" method="post">
 <?php
 	
 	// Get out show's data from TheTVDB
@@ -33,6 +34,7 @@ XBMC Episode Merger
 		'<td>Episode Number</td>' .
 		'<td>Episode Name</td>' .
 		'<td>Aired Date</td>' .
+		'<td>Merge With</td>' .
 	     '</tr>';
 
 	// Grab info about each episode
@@ -45,7 +47,17 @@ XBMC Episode Merger
 			'</td>';
 		echo '<td>' . $episode->EpisodeName . '</td>';
 		echo '<td>' . $episode->FirstAired . '</td>';
+		echo '<td>' . 
+			'S' . sprintf('%02s', $episode->SeasonNumber) .
+			'E<input type="text" ' . 
+			'name="' . $episode->id . '" ' .
+			'value="' . sprintf('%02s', $episode->EpisodeNumber) . '"</input>';
 		echo '</tr>';
 	}
 
-?></table>
+	echo end($xml->Episode)->EpisodeName;
+
+?>
+</table>
+</form>
+
