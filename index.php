@@ -1,4 +1,7 @@
-<?php include 'functions.php' ?>
+<?php 
+	include 'functions.php';
+	include 'config.php';
+?>
 
 <style>
 	.episode-number, .episode-name, .aired-date, .merge-with {
