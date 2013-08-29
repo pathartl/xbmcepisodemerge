@@ -1,3 +1,11 @@
+<?php include 'functions.php' ?>
+
+<style>
+	.episode-number, .episode-name, .aired-date, .merge-with {
+		text-align: center
+	}
+</style>
+
 XBMC Episode Merger
 <br><br>
 
@@ -27,31 +35,33 @@ XBMC Episode Merger
 	print_r((string) $xml->Series->SeriesName);
 	
 	// Start our massive table
-	?><table><?php
+	?><table width="100%"><?php
 	
-	// Create useful headers
+	// Create useful table headers
 	echo '<tr id="table-header">' .
-		'<td>Episode Number</td>' .
-		'<td>Episode Name</td>' .
-		'<td>Aired Date</td>' .
-		'<td>Merge With</td>' .
+		'<td class="episode-number">Episode Number</td>' .
+		'<td class="episode-name">Episode Name</td>' .
+		'<td class="aired-date">Aired Date</td>' .
+		'<td class="merge-with">Merge With</td>' .
+		'<td class="download-nfo">Download NFO</td>' .
 	     '</tr>';
 
 	// Grab info about each episode
 	foreach ($xml->Episode as $episode) {
 		echo '<tr id="' . $episode->id . '">';
 		// Make our episode number in the S01E01 format
-		echo '<td>S' .
+		echo '<td class="episode-number">S' .
 			sprintf('%02s', $episode->SeasonNumber) .
 			'E' . sprintf('%02s', $episode->EpisodeNumber) .
 			'</td>';
-		echo '<td>' . $episode->EpisodeName . '</td>';
-		echo '<td>' . $episode->FirstAired . '</td>';
-		echo '<td>' . 
+		echo '<td class="episode-name">' . $episode->EpisodeName . '</td>';
+		echo '<td class="aired-date">' . $episode->FirstAired . '</td>';
+		echo '<td class="merge-with">' . 
 			'S' . sprintf('%02s', $episode->SeasonNumber) .
 			'E<input type="text" ' . 
 			'name="' . $episode->id . '" ' .
 			'value="' . sprintf('%02s', $episode->EpisodeNumber) . '"</input>';
+		echo '<td class="download-nfo"><input type="submit" value="Download NFO" name="download"></td>';
 		echo '</tr>';
 	}
 ?>
