@@ -1,12 +1,30 @@
 <?php
 
-function generate_nfo() {
-	// For each argument
-	foreach (func_get_args() as $episode) {
-		// If the current episode in the loop is the last episode set $lastepisode true
-		if ($episode = func_get_arg(func_num_args() - 1)) $lastepisode = true;
-		echo $lastepisode;
+function currentUrl() {
+    $protocol = strpos(strtolower($_SERVER['SERVER_PROTOCOL']),'https') === FALSE ? 'http' : 'https';
+    $host     = $_SERVER['HTTP_HOST'];
+    $script   = $_SERVER['SCRIPT_NAME'];
+    $params   = $_SERVER['QUERY_STRING'];
+
+    return $protocol . '://' . $host . $script . '?' . $params;
+}
+
+function array_average($array) {
+
+	$average = 0;
+	$handicap = 0;
+
+	foreach ($array as $value) {
+		if ($value == 0) {
+			$handicap++;
+		}
+		$average += $value;
 	}
+
+	$average = ($average / (count($array) - $handicap));
+
+	return $average;
+
 }
 
 ?>
