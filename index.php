@@ -8,10 +8,7 @@
 
 		include 'config.php';
 		include 'inc/functions.php';
-		
-		error_reporting(E_ALL);
-		ini_set('display_errors', '1');
-		
+
 		mysql_connect($database_server . ":" . $database_port,$database_user,$database_password);
 		
 		@mysql_select_db($database_name) or die( "Unable to select database");
