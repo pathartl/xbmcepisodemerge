@@ -36,50 +36,49 @@
 		
 		 		// Check if there is another episode with the same number in the merge queue
 		 		$result = array_count_values($mergequeue);
-		 		if ($result[$episode] > 1) {
-		 			// Find the keys of the other matching episodes
-		 			$keys = array_keys($mergequeue, $episode);
-		 			foreach ($keys as $key) {
-		 				// Sanitized Episode Details
-		 				$plot[] = $_POST['plot'][$key];
-		 				$director[] = $_POST['director'][$key];
-		 				$title[] = $_POST['title'][$key];
-		 				$rating[] = $_POST['rating'][$key];
-		 			}
-		
-		 			// Split the episode name into season and episode number
-		 			$split = explode("E", substr($episode, 1));
-		
-		 			$directorsArray = array();
-		
-		 			// For each episode's director info
-		 			foreach ($director as $item) {
-		 				// Explode the episode's directors into an array
-		 				$explodedDirectors = explode(" / ", $item);
-		 				// Add each single directory name to one array
-		 				foreach ($explodedDirectors as $singleDirector) {
-		 					$directorsArray[] = $singleDirector;
-		 				}
-		 			}
-		
-					$uniqueDirector = array_unique($directorsArray);
-		 			$nfo = "<episodedetails>\n" .
-		 				"<title>" . implode(" / ", $title) . "</title>\n" .
-		 				"<rating>" . array_average($rating) . "</rating>\n" .
-		 				"<season>" . ltrim($split[0], 0) . "</season>\n" .
-		 				"<episode>" . ltrim($split[1], 0) . "</episode>\n" .
-		 				"<plot>" . implode(" | ", $plot) . "</plot>\n" .
-		 				"<director>" . implode(" / ", $uniqueDirector) . "</director>\n" .
-		 				"</episodedetails>\n\n";
-		
-		 			echo nl2br(htmlspecialchars($nfo));
-		
-		 			$filename = $output_dir . "/" . $episode . ".nfo";
-					$handle = fopen($filename, 'w') or die("can't open file");
-					fwrite($handle, $nfo);
-					fclose($handle);
-		
+		 		
+		 		// Find the keys of the other matching episodes
+		 		$keys = array_keys($mergequeue, $episode);
+		 		foreach ($keys as $key) {
+		 			// Sanitized Episode Details
+		 			$plot[] = $_POST['plot'][$key];
+		 			$director[] = $_POST['director'][$key];
+		 			$title[] = $_POST['title'][$key];
+		 			$rating[] = $_POST['rating'][$key];
 		 		}
+		
+		 		// Split the episode name into season and episode number
+		 		$split = explode("E", substr($episode, 1));
+		
+		 		$directorsArray = array();
+		
+		 		// For each episode's director info
+		 		foreach ($director as $item) {
+		 			// Explode the episode's directors into an array
+		 			$explodedDirectors = explode(" / ", $item);
+		 			// Add each single directory name to one array
+		 			foreach ($explodedDirectors as $singleDirector) {
+		 				$directorsArray[] = $singleDirector;
+		 			}
+		 		}
+		
+				$uniqueDirector = array_unique($directorsArray);
+		 		$nfo = "<episodedetails>\n" .
+		 			"<title>" . implode(" / ", $title) . "</title>\n" .
+		 			"<rating>" . array_average($rating) . "</rating>\n" .
+		 			"<season>" . ltrim($split[0], 0) . "</season>\n" .
+		 			"<episode>" . ltrim($split[1], 0) . "</episode>\n" .
+		 			"<plot>" . implode(" | ", $plot) . "</plot>\n" .
+		 			"<director>" . implode(" / ", $uniqueDirector) . "</director>\n" .
+		 			"</episodedetails>\n\n";
+		
+		 		echo nl2br(htmlspecialchars($nfo));
+		
+		 		$filename = $output_dir . "/" . $episode . ".nfo";
+				$handle = fopen($filename, 'w') or die("can't open file");
+				fwrite($handle, $nfo);
+				fclose($handle);
+		
 		 	}
 		}
 		
